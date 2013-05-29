@@ -39,7 +39,7 @@ public class Getin {
                 System.out.print("*");
                 temp--;
             }
-            System.out.println(ax);
+            System.out.println();
             ax=ax+ctrl;
         } while (ax!=0);
     }
