@@ -148,8 +148,10 @@ class Menu_and_operate {
             if (pil == 1 || pil == 2 || pil == 3 || pil == 4) {
                 // continous mode, parameter boolean true maka
                 // akan menulis file baru jika blm ada,
-                // jika sudah ada maka hanya
-                x.write_file(dir, String.valueOf(hasil), true);
+                // jika sudah ada maka hanya melanjutkan menulis pada file tersebut
+                //x.write_file(dir, String.valueOf(hasil), true);
+                // pakai yg false aja , takut ga sama dengan contoh asdos nanti nilai dikurangi >.<
+                x.write_file(dir, String.valueOf(hasil), false);
             } else {
                 System.out.println("Terjadi kesalahan!");
                 System.out.println("Program tidak menyimpan hasil!");
