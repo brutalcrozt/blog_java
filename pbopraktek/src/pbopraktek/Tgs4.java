@@ -23,8 +23,8 @@ public class Tgs4 {
         Scanner main_scanner = new Scanner(System.in);
         Menu_and_operate telat_tiga_bulan;
         IOFile latihan = new IOFile();
-        int intsatu = latihan.baca_file(dir1);
-        int intdua = latihan.baca_file(dir2);
+        double intsatu = latihan.baca_file(dir1);
+        double intdua = latihan.baca_file(dir2);
         telat_tiga_bulan = new Menu_and_operate(intsatu, intdua);
         telat_tiga_bulan.menu(main_scanner, latihan, result);
     }
@@ -45,32 +45,17 @@ class IOFile {
         text_which_readed = "";
     }
 
-    public void write_file(String dir, int to_write) {
+    public void write_file(String dir, double to_write) {
         try {
             f = new File(dir);
             writer = new FileWriter(f);
             bw = new BufferedWriter(writer);
-            bw.write(to_write);
+            bw.write(String.valueOf(to_write));
+            bw.newLine();
             bw.close();
             writer.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    // overloading method write_file 
-    // method pertama menulis int
-    // method kedua menulis String
-
-    public void write_file(String dir, String to_write) {
-        try {
-            f = new File(dir);
-            writer = new FileWriter(f);
-            bw = new BufferedWriter(writer);
-            bw.write(to_write);
-            bw.close();
-            writer.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.getMessage();
         }
     }
 
@@ -79,45 +64,27 @@ class IOFile {
             f = new File(dir);
             writer = new FileWriter(f, bol);
             bw = new BufferedWriter(writer);
-            bw.newLine();
             bw.write(to_write);
+            bw.newLine();
             bw.close();
             writer.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.getMessage();
         }
     }
 
-    public void baca_file(String dir, int c) {
-        try {
-            f = new File(dir);
-            reader = new FileReader(f);
-            br = new BufferedReader(reader);
-            String temp = br.readLine();
-            while (temp != null) {
-                text_which_readed = text_which_readed + temp + "\n";
-                temp = br.readLine();
-            }
-            br.close();
-            reader.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public int baca_file(String dir) {
-        int i = 0;
+    public double baca_file(String dir) {
+        double i = 0;
         try {
             f = new File(dir);
             reader = new FileReader(f);
             br = new BufferedReader(reader);
             String string = br.readLine();
-            int x = Integer.parseInt(string);
-            i = x;
+            i = Double.parseDouble(string);
             reader.close();
             br.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ex.getMessage();
         }
         return i;
     }
@@ -137,46 +104,56 @@ class IOFile {
 
 class Menu_and_operate {
 
-    private int hasil, a, b;
+    private double hasil, a, b;
 
-    public Menu_and_operate(int a, int b) {
+    public Menu_and_operate(double a, double b) {
         this.a = a;
         this.b = b;
     }
 
     public void menu(Scanner p, IOFile x, String dir) {
+        int pil = 0;
         System.out.printf("Pilih operasi\n");
         System.out.printf("1. Tambah\n");
         System.out.printf("2. Kurang\n");
         System.out.printf("3. Kali\n");
         System.out.printf("4. Bagi\n");
         System.out.printf("Pilihan anda : ");
-        int pil = p.nextInt();
-        switch (pil) {
-            case 1: {
-                hasil = a + b;
-                break;
+        try {
+            pil = p.nextInt();
+            switch (pil) {
+                case 1: {
+                    hasil = a + b;
+                    break;
+                }
+                case 2: {
+                    hasil = a - b;
+                    break;
+                }
+                case 3: {
+                    hasil = a * b;
+                    break;
+                }
+                case 4: {
+                    hasil = a / b;
+                    break;
+                }
+                default: {
+                    System.out.println("Maaf, pilihan tidak tersedia!");
+                }
             }
-            case 2: {
-                hasil = a - b;
-                break;
+        } catch (Exception ex) {
+            ex.getMessage();
+        } finally {
+            if (pil == 1 || pil == 2 || pil == 3 || pil == 4) {
+                // continous mode, parameter boolean true maka
+                // akan menulis file baru jika blm ada,
+                // jika sudah ada maka hanya
+                x.write_file(dir, String.valueOf(hasil), true);
+            } else {
+                System.out.println("Terjadi kesalahan!");
+                System.out.println("Program tidak menyimpan hasil!");
             }
-            case 3: {
-                hasil = a * b;
-                break;
-            }
-            case 4: {
-                hasil = a / b;
-                break;
-            }
-            default: {
-                System.out.println("Maaf, pilihan tidak tersedia!");
-            }
-        }
-        if (pil == 1 || pil == 2 || pil == 3 || pil == 4) {
-            x.write_file(dir,String.valueOf(hasil), true);
-        } else {
-            System.out.println("Program tidak menyimpan hasil!");
         }
     }
 }
