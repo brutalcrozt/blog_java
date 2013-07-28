@@ -127,7 +127,9 @@ class Translate {
                             for (int i = 0; i < index; i++) {
                                 tk.nextToken();
                             }
-                            System.out.printf("%s \t di index %d", tk.nextToken(),index);
+                            //System.out.printf("%s \t di index %d \n", tk.nextToken(),index);
+                            // kalau bingung pake yang atas!
+                            System.out.printf("%s \n", tk.nextToken());
                         } catch (Exception e) {
                             System.out.printf("%s", e.getMessage());
                         }
