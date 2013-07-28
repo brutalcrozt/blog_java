@@ -123,7 +123,7 @@ class Translate {
                             int index = 0;
                             index = tgs.get_index_ind(x, kata);
                             StringTokenizer tk = new StringTokenizer(x, ",");
-                            System.out.println("Inggris'nya : ");
+                            System.out.print("Inggris'nya : ");
                             for (int i = 0; i < index; i++) {
                                 tk.nextToken();
                             }
